@@ -1,12 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Todo = require('./Models/Todo')
+const cors = require('cors')
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
-mongoose.connect('mongodb://localhost:27017/todolist')
+// mongoose.connect('mongodb://localhost:27017/todolist')
 // koyeb에 배포할 때는 atlas 환경변수 세팅할 것
+mongoose.connect(process.env.DB_CONN)
 
 app.get('/get', async (req, res)=>{
   const todos = await Todo.find()
